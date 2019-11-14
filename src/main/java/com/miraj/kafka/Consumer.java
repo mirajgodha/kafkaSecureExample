@@ -1,5 +1,6 @@
 package com.miraj.kafka;
 
+import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -15,15 +16,16 @@ public class Consumer {
 	
     public static void main(String[] args) {
         Properties props = new Properties();
-        props.put("bootstrap.servers", "raf010-slv-04.cloud.in.guavus.com:6667");
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG , "raf010-slv-04.cloud.in.guavus.com:6667");
         props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props.put("group.id", "test_topic");
         props.put("security.protocol", "SASL_PLAINTEXT");
-        props.put("sasl.kerberos.service.name", "Kafka");
+        props.put("sasl.kerberos.service.name", "kafka");
         props.put("sasl.mechanism", "GSSAPI");
-        String keytabLocation = "/etc/security/keytabs/kafka.service.keytab";
-        String principal = "kafka/raf010-slv-04.cloud.in.guavus.com@GVS.GGN";
+        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+        String keytabLocation = "/etc/security/keytabs/cdap.headless.keytab";
+        String principal = "cdap-raf010-reflex-platform@GVS.GGN";
         
         props.put(SASL_JAAS_CONFIG, String.format("com.sun.security.auth.module.Krb5LoginModule required \n" +
                 "        useKeyTab=true \n" +
