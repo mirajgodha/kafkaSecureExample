@@ -4,7 +4,6 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 
-import src.main.java.co.cask.hydrator.plugin.common.String;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +18,10 @@ public class Consumer {
         props.put("bootstrap.servers", "raf010-slv-04.cloud.in.guavus.com:9092,raf010-slv-05.cloud.in.guavus.com:9092");
         props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-        props.put("group.id", "test-group");
+        props.put("group.id", "test_topic");
         props.put("security.protocol", "SASL_PLAINTEXT");
         props.put("sasl.kerberos.service.name", "kafka");
+        props.put("sasl.mechanism", "GSSAPI");
         String keytabLocation = "/etc/security/keytabs/cdap.headless.keytab";
         String principal = "cdap-raf010-reflex-platform@GVS.GGN";
         
@@ -33,25 +33,30 @@ public class Consumer {
                 "        keyTab=\"%s\" \n" +
                 "        principal=\"%s\";",
         keytabLocation, principal));
-
+        KafkaConsumer<String, String> consumer=null;
         // Checks connection by extracting topics.
         try  {
-        	KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
-        	consumer.listTopics();
-        
+        	consumer = new KafkaConsumer<>(props);
+//        	System.out.println("Number of topis are: " + consumer.listTopics().size());
+//        	consumer.listTopics().forEach((k,v) -> System.out.println("keys" + k + "Values"+ v));
+        	
+        	
 //        KafkaConsumer<String, String> kafkaConsumer = new KafkaConsumer<String, String>(props);
-//        List<String> topics = new ArrayList<String>();
-//        topics.add("devglan-partitions-topic");
-//        kafkaConsumer.subscribe(topics);
-//        try{
-//            while (true){
-//                ConsumerRecords<String, String> records = kafkaConsumer.poll(10);
-//                for (ConsumerRecord<String, String> record: records){
-//                    System.out.println(String.format("Topic - %s, Partition - %d, Value: %s", record.topic(), record.partition(), record.value()));
-//                }
+        List<String> topics = new ArrayList<String>();
+        topics.add("test_topic");
+        consumer.subscribe(topics);
+            while (true){
+                ConsumerRecords<String, String> records = consumer.poll(10);
+                for (ConsumerRecord<String, String> record: records){
+                    System.out.println(String.format("Topic - %s, Partition - %d, Value: %s", record.topic(), record.partition(), record.value()));
+                }
+            }
+        	
         }catch (Exception e){
             System.out.println(e.getMessage());
             e.printStackTrace();
+        }finally {
+        	consumer.close();
         }
     }
 }
