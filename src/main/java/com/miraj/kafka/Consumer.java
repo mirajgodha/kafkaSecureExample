@@ -25,22 +25,14 @@ public class Consumer {
         String keytabLocation = "/etc/security/keytabs/kafka.service.keytab";
         String principal = "kafka/raf010-slv-04.cloud.in.guavus.com@GVS.GGN";
         
-        props.put(SASL_JAAS_CONFIG, String.format(
-        		"com.sun.security.auth.module.Krb5LoginModule required \n" +
+        props.put(SASL_JAAS_CONFIG, String.format("com.sun.security.auth.module.Krb5LoginModule required \n" +
                 "        useKeyTab=true \n" +
                 "        storeKey=true  \n" +
                 "        useTicketCache=false  \n" +
                 "        renewTicket=true  \n" +
                 "        keyTab=\"%s\" \n" +
-                "        principal=\"%s\"; \n" + 
-                "Client {\n" + 
-                "com.sun.security.auth.module.Krb5LoginModule required\n" + 
-                "useKeyTab=true\n" + 
-                "keyTab=\"%s\" \n" + 
-                "serviceName=\"zookeeper\" \n" + 
-                "principal=\"%s\"; \n" + 
-                "};",
-				keytabLocation, principal,keytabLocation, principal));
+                "        principal=\"%s\";",
+				keytabLocation, principal));
 		KafkaConsumer<String, String> consumer = null;
 		// Checks connection by extracting topics.
 		try {
