@@ -20,8 +20,9 @@ public class Consumer {
         props.put("sasl.kerberos.service.name", "kafka");
 
         // Checks connection by extracting topics.
-        try (KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props)) {
-          consumer.listTopics();
+        try  {
+        	KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
+        	consumer.listTopics();
         
 //        KafkaConsumer<String, String> kafkaConsumer = new KafkaConsumer<String, String>(props);
 //        List<String> topics = new ArrayList<String>();
@@ -35,6 +36,7 @@ public class Consumer {
 //                }
         }catch (Exception e){
             System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 }
