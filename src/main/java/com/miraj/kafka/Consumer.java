@@ -17,9 +17,12 @@ public class Consumer {
     public static void main(String[] args) {
     
     	KafkaConsumer<String, String> consumer = null;
-    	String keytabLocation = "/etc/security/keytabs/cdap.headless.keytab";
-    	String principal = "cdap-raf010-reflex-platform@GVS.GGN";
+//    	String keytabLocation = "/etc/security/keytabs/cdap.headless.keytab";
+//    	String principal = "cdap-raf010-reflex-platform@GVS.GGN";
 
+    	 String keytabLocation = "/etc/security/keytabs/cdap.headless.keytab";
+     	String principal = "cdap-rafa001-reflex-platform@GVS.GGN";
+     	
     	Properties props = new Properties();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG , "raf010-slv-04.cloud.in.guavus.com:6667");
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
