@@ -57,8 +57,8 @@ public class Consumer {
 				System.out.println("going to print : records");
 				ConsumerRecords<String, String> records = consumer.poll(10);
 				for (ConsumerRecord<String, String> record : records) {
-					System.out.println(String.format("Topic - %s, Partition - %d, Value: %s", record.topic(),
-							record.partition(), record.value()));
+					System.out.println(String.format("Topic - %s, Partition - %d, Value: %s, Offset: %s, Key: %s", record.topic(),
+							record.partition(), record.value(), record.offset(), record.key()));
 				}
 			}
 
