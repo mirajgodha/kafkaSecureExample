@@ -27,7 +27,7 @@ public class Consumer {
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG , "raf010-slv-04.cloud.in.guavus.com:6667");
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, "test_topic");
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, "test_topic1");
         props.put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, "SASL_PLAINTEXT");
         props.put(SaslConfigs.SASL_KERBEROS_SERVICE_NAME, "kafka");
         props.put(SaslConfigs.SASL_MECHANISM, "GSSAPI");
@@ -46,7 +46,7 @@ public class Consumer {
 		try {
 			consumer = new KafkaConsumer<>(props);
         	System.out.println("Number of topis are: " + consumer.listTopics().size());
-        	consumer.listTopics().forEach((k,v) -> System.out.println("keys" + k + "Values"+ v));
+//        	consumer.listTopics().forEach((k,v) -> System.out.println("keys" + k + "Values"+ v));
 
 //        KafkaConsumer<String, String> kafkaConsumer = new KafkaConsumer<String, String>(props);
 			List<String> topics = new ArrayList<String>();
@@ -54,7 +54,7 @@ public class Consumer {
 			consumer.subscribe(topics);
 			int i = 0;
 			while (i++ < 10) {
-				System.out.println("going to print : recores");
+				System.out.println("going to print : records");
 				ConsumerRecords<String, String> records = consumer.poll(10);
 				for (ConsumerRecord<String, String> record : records) {
 					System.out.println(String.format("Topic - %s, Partition - %d, Value: %s", record.topic(),
