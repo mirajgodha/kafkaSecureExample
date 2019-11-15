@@ -10,6 +10,7 @@ import org.apache.kafka.common.config.SaslConfigs;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.UUID;
 
 public class Consumer {
 
@@ -27,7 +28,7 @@ public class Consumer {
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG , "raf010-slv-04.cloud.in.guavus.com:6667");
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, "test_topic1");
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, UUID.randomUUID().toString());
         props.put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, "SASL_PLAINTEXT");
         props.put(SaslConfigs.SASL_KERBEROS_SERVICE_NAME, "kafka");
         props.put(SaslConfigs.SASL_MECHANISM, "GSSAPI");
